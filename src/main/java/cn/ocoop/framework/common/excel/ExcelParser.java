@@ -22,6 +22,123 @@ import java.util.stream.Collectors;
 
 import static org.apache.poi.ss.usermodel.IndexedColors.RED;
 
+/**
+ * LinkedHashMap<String, CellValueMapper> cm = Maps.newLinkedHashMap();
+ *         cm.put("createTime", value -> {
+ *             try {
+ *                 if (StringUtils.isBlank(value)) return LocalDateTime.now();
+ *
+ *                 return LocalDateTime.parse(value, DateTimeFormatter.ofPattern(DateTimeDeserializer.getPattern(value)));
+ *             } catch (Throwable throwable) {
+ *
+ *             }
+ *             return LocalDateTime.now();
+ *         });
+ *         cm.put("remarks", value -> {
+ *             if (StringUtils.isBlank(value)) {
+ *                 return "";
+ *             }
+ *             return value.trim();
+ *         });
+ *         cm.put("mobile", value -> {
+ *             System.out.println(value);
+ *             if (StringUtils.isBlank(value) || !value.trim().matches("1\\d{10}")) {
+ *                 i[0]++;
+ *                 throw new InvalidValueException("手机号不匹配");
+ *             }
+ *             return Long.parseLong(value.trim());
+ *         });
+ *         cm.put("name", value -> value);
+ *         cm.put("idCard", value -> {
+ *             if (StringUtils.isBlank(value) || value.length() != 18) return null;
+ *             return value;
+ *         });
+ *         cm.put("birthday", value -> {
+ *             try {
+ *                 if (StringUtils.isBlank(value)) return null;
+ *                 return LocalDate.parse(value, DateTimeFormatter.ofPattern(DateTimeDeserializer.getPattern(value)));
+ *             } catch (Throwable throwable) {
+ *
+ *             }
+ *             return null;
+ *         });
+ *         cm.put("sex", value -> "女".equals(value) ? "F" : "M");
+ *         cm.put("education", value -> {
+ *             if (StringUtils.isBlank(value)) return null;
+ *
+ *             if (value.contains("初中")) return "CZ";
+ *             if (value.contains("高中")) return "GZ";
+ *             if (value.contains("大专")) return "DZ";
+ *             if (value.contains("硕士")) return "SS";
+ *             if (value.contains("博士")) return "BS";
+ *             return null;
+ *         });
+ *
+ *         cm.put("nationCode", value -> {
+ *             if (StringUtils.isBlank(value)) return null;
+ *             String name = value.replace("族","" );
+ *             if (StringUtils.isBlank(name)) return null;
+ *
+ *             for (String s : code_name.keySet()) {
+ *                 if (s.startsWith(name)) {
+ *                     return code_name.get(s);
+ *                 }
+ *             }
+ *             return null;
+ *         });
+ *         cm.put("inauguralState", value -> "在职".equals(value) ? "ZZ" : "QZZ");
+ *
+ *
+ *         ExcelParser<Member> memberExcelParser = ExcelParser.newInstance(1, 0, new FileInputStream("C:\\Users\\79407\\Desktop\\ssss.xlsx"), Member.class, cm);
+ *         memberExcelParser.sax();
+ *         StringBuilder sql = new StringBuilder();
+ *         System.out.println(i[0]);
+ *         for (DataWrapper<Member> memberDataWrapper : memberExcelParser.getData()) {
+ *             Member data = memberDataWrapper.getData();
+ *             sql.append("INSERT INTO member(A,ID,IMPORT_TIME,CREATE_TIME,SOURCE,STATE,MOBILE,NAME,ID_CARD,BIRTHDAY,SEX,EDUCATION,NATION_CODE,INAUGURAL_STATE,REMARKS) VALUES (")
+ *                     .append("'").append("FK").append("',")
+ *                     .append(Id.next()).append(",")
+ *                     .append("NOW()").append(",")
+ *                     .append("'").append(data.getCreateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))).append("',")
+ *                     .append("'").append("HTDR").append("',")
+ *                     .append("'").append("ZC").append("',")
+ *                     .append(data.getMobile()).append(",")
+ *                     .append("'").append(data.getName()).append("',");
+ *             if (data.getIdCard() != null) {
+ *                 sql.append("'").append(data.getIdCard()).append("',");
+ *             } else {
+ *                 sql.append("null").append(",");
+ *             }
+ *             if (data.getBirthday() != null) {
+ *                 sql.append("'").append(data.getBirthday().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))).append("',");
+ *             } else {
+ *                 sql.append("null").append(",");
+ *             }
+ *
+ *             if (data.getSex() != null) {
+ *                 sql.append("'").append(data.getSex()).append("',");
+ *             } else {
+ *                 sql.append("null").append(",");
+ *             }
+ *             if (data.getEducation() != null) {
+ *                 sql.append("'").append(data.getEducation()).append("',");
+ *             } else {
+ *                 sql.append("null").append(",");
+ *             }
+ *             if (data.getNationCode() != null) {
+ *                 sql.append("'").append(data.getNationCode()).append("',");
+ *             } else {
+ *                 sql.append("null").append(",");
+ *             }
+ *             sql.append("'").append(data.getInauguralState()).append("',").append("'").append(data.getRemarks()).append("')  ON DUPLICATE KEY UPDATE UPDATE_TIME=UPDATE_TIME,A = 'FK'");
+ *             if (data.getNationCode() != null) {
+ *                 sql.append(",NATION_CODE = '" + data.getNationCode() + "'");
+ *             }
+ *             sql.append(";").append(System.lineSeparator());
+ *         }
+ *         FileUtils.write(new File("G:\\java\\workspace\\data.sql"), sql.toString(), "utf-8");
+ * @param <T>
+ */
 @Slf4j
 public class ExcelParser<T> {
     //删除行标记
@@ -39,6 +156,8 @@ public class ExcelParser<T> {
     private LinkedHashMap<String, CellValueMapper> cellMapper;
     private Map<Integer, CellValueMapper> cellIndex_checker = Maps.newHashMap();
     private Workbook workbook;
+    private FormulaEvaluator evaluator;
+
     @Getter//是否存在错误
     private boolean error;
 
@@ -55,6 +174,7 @@ public class ExcelParser<T> {
         }
 
         workbook = WorkbookFactory.create(inputStream);
+        evaluator = workbook.getCreationHelper().createFormulaEvaluator();
     }
 
     public static <T> ExcelParser<T> newInstance(int rowNumStart, int cellNumStart, InputStream inputStream, Class<T> modelClass, LinkedHashMap<String, CellValueMapper> cellMapper) throws IOException, InvalidFormatException {
@@ -151,13 +271,14 @@ public class ExcelParser<T> {
             case BOOLEAN:
                 return String.valueOf(cell.getBooleanCellValue());
             case FORMULA:
-                return cell.getCellFormula();
+                return getValue(evaluator.evaluateInCell(cell));
             case BLANK:
                 return null;
             default:
                 return null;
         }
     }
+
 
     public void proceed(int rowIndex) {
         proceedRowsIndex.add(rowIndex);
@@ -170,6 +291,7 @@ public class ExcelParser<T> {
         }
 
         workbook.write(outputStream);
+        workbook.close();
     }
 
 

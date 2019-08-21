@@ -1,4 +1,4 @@
-//package com.lanjoys.framework.common.util;
+package cn.ocoop.framework.common.util;//package com.lanjoys.framework.common.util;
 //
 //import lombok.Getter;
 //import lombok.Setter;

@@ -40,9 +40,13 @@ public class WebUtils {
     /**
      * Return the path within the web application for the given request.
      * Detects include request URL if called within a RequestDispatcher include.
+     * <p/>
      * For example, for a request to URL
+     * <p/>
      * <code>http://www.somehost.com/myapp/my/url.jsp</code>,
+     * <p/>
      * for an application deployed to <code>/mayapp</code> (the application's context path), this method would return
+     * <p/>
      * <code>/my/url.jsp</code>.
      *
      * @param request current HTTP request
@@ -247,9 +251,9 @@ public class WebUtils {
     /**
      * A convenience method that merely casts the incoming <code>ServletRequest</code> to an
      * <code>HttpServletRequest</code>:
-     * 
+     * <p/>
      * <code>return (HttpServletRequest)request;</code>
-     * 
+     * <p/>
      * Logic could be changed in the future for logging or throwing an meaningful exception in
      * non HTTP request environments (e.g. Portlet API).
      *
@@ -263,9 +267,9 @@ public class WebUtils {
     /**
      * A convenience method that merely casts the incoming <code>ServletResponse</code> to an
      * <code>HttpServletResponse</code>:
-     * 
+     * <p/>
      * <code>return (HttpServletResponse)response;</code>
-     * 
+     * <p/>
      * Logic could be changed in the future for logging or throwing an meaningful exception in
      * non HTTP request environments (e.g. Portlet API).
      *

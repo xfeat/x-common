@@ -6,7 +6,7 @@
 
     <groupId>cn.ocoop.framework</groupId>
     <artifactId>x-common</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 
     <name>x-common</name>
     <description>util case.</description>
@@ -108,14 +108,23 @@
         <guava.version>25.1-jre</guava.version>
         <poi.version>3.17</poi.version>
         <commons-beanutils.version>1.9.3</commons-beanutils.version>
+        <commons-io.version>2.5</commons-io.version>
         <mybatis-spring-boot-starter.version>1.3.2</mybatis-spring-boot-starter.version>
         <pagehelper-spring-boot-starter.version>1.2.5</pagehelper-spring-boot-starter.version>
+        <qrcode-plugin.version>1.0</qrcode-plugin.version>
+        <spring-webmvc.version>5.0.8.RELEASE</spring-webmvc.version>
+        <fastjson.version>1.2.47</fastjson.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
@@ -181,7 +190,31 @@
             <version>${pagehelper-spring-boot-starter.version}</version>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>com.github.hui.media</groupId>
+            <artifactId>qrcode-plugin</artifactId>
+            <version>${qrcode-plugin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring-webmvc.version}</version>
+            <scope>compile</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
+    <repositories>
+        <repository>
+            <id>yihui-maven-repo</id>
+            <url>https://raw.githubusercontent.com/liuyueyi/maven-repository/master/repository</url>
+        </repository>
+    </repositories>
     <dependencyManagement>
         <dependencies>
             <dependency>

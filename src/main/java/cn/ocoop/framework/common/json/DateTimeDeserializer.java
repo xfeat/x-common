@@ -45,7 +45,7 @@ public class DateTimeDeserializer extends JsonDeserializer<LocalDateTime> {
         System.out.println(getPattern("11点11分"));
     }
 
-    private static String getPattern(String dateString) {
+    public static String getPattern(String dateString) {
         for (Map.Entry<String, Pattern> entry : patternMap.entrySet()) {
             Matcher matcher = entry.getValue().matcher(dateString);
             if (matcher.find()) {

@@ -1,4 +1,4 @@
-//package com.lanjoys.framework.common.util;
+package cn.ocoop.framework.common.util;//package com.lanjoys.framework.common.util;
 //
 //import com.lanjoys.boss.App;
 //import org.springframework.data.redis.core.StringRedisTemplate;

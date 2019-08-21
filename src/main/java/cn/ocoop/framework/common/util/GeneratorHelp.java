@@ -30,36 +30,14 @@ public class GeneratorHelp {
 
 
     public static void main(String[] args) {
-        String sql = "CREATE TABLE `b_company_contract` (\n" +
-                "  `COMPANY_ID` bigint(20) NOT NULL,\n" +
+        String sql = "CREATE TABLE `recommend_rule_act` (\n" +
                 "  `ID` bigint(20) NOT NULL,\n" +
-                "  `PRODUCT` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '服务产品\\r\\nWB_RSDL:外包-人事代理\\r\\nWB_LWPQ:外包-劳务派遣\\r\\nWB_GWPQ:外包-岗位外包\\r\\nWB_YWWB:外包-业务外包\\r\\nLT:猎头\\r\\nPRO:RPO\\r\\nQYPX:企业内训\\r\\nTZ:拓展\\r\\nGLZX:管理咨询\\r\\nQT:其他',\n" +
-                "  `PRICE` decimal(10,2) NOT NULL COMMENT '总价',\n" +
-                "  `BEGIN_TIME` datetime NOT NULL COMMENT '执行日期 开始时间',\n" +
-                "  `END_TIME` datetime NOT NULL COMMENT '执行日期 结束时间',\n" +
-                "  `DEMAND_PERSON` int(10) DEFAULT NULL COMMENT '需求量',\n" +
-                "  `DEMAND_DURATION` int(10) DEFAULT NULL COMMENT '需求量 时间(月)',\n" +
-                "  `UNIT_PRICE` decimal(10,2) DEFAULT NULL COMMENT '单价 元/人/月',\n" +
-                "  `FEE_BASE_SB` decimal(10,2) DEFAULT NULL COMMENT '社保缴费基数',\n" +
-                "  `FEE_BASE_GJJ` decimal(10,2) DEFAULT NULL COMMENT '公积金缴费基数',\n" +
-                "  `HAS_CONTRACT` char(1) CHARACTER SET utf8mb4 NOT NULL DEFAULT 'Y' COMMENT '是否签订合同 Y:是 N：否',\n" +
-                "  `OTHER_NAME` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '对方客户名称',\n" +
-                "  `OTHER_CONTRACT_NAME` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '对方合同主体名称',\n" +
-                "  `OTHER_CONTACT_NAME` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '对方负责人',\n" +
-                "  `OTHER_CONTACT_MOBILE` bigint(11) DEFAULT NULL COMMENT '对方负责人手机',\n" +
-                "  `OTHER_CONTACT_EMAIL` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '对方负责人邮箱',\n" +
-                "  `OTHER_ADDRESS` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '对方公司地址',\n" +
-                "  `OUR_NAME` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '我方客户名称',\n" +
-                "  `OUR_CONTRACT_NAME` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '我方合同主体名称',\n" +
-                "  `OUR_CONTACT_NAME` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '我方负责人',\n" +
-                "  `OUR_CONTACT_MOBILE` bigint(11) DEFAULT NULL COMMENT '我方负责人手机',\n" +
-                "  `OUR_CONTACT_EMAIL` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '我方负责人邮箱',\n" +
-                "  `OUR_ADDRESS` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '我方公司地址',\n" +
-                "  `ATTACH_URL` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '附件地址',\n" +
-                "  `CREATE_TIME` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n" +
-                "  `CREATE_USER_ID` bigint(20) NOT NULL,\n" +
+                "  `RANGE_BEGIN` int(11) NOT NULL COMMENT '区间开始',\n" +
+                "  `RANGE_END` int(11) NOT NULL COMMENT '区间结束',\n" +
+                "  `CREATE_TIME` datetime NOT NULL,\n" +
+                "  `UPDATE_TIME` datetime NOT NULL,\n" +
                 "  PRIMARY KEY (`ID`)\n" +
-                ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='企业合同';\n" +
+                ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;" +
                 "\n";
 
         printInfo(sql);
