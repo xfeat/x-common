@@ -71,7 +71,7 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <skip>true</skip>
+                            <additionalparam>-Xdoclint:none</additionalparam>
                         </configuration>
                     </plugin>
                     <!-- GPG -->
