@@ -30,21 +30,29 @@ public class GeneratorHelp {
 
 
     public static void main(String[] args) {
-        String sql = "CREATE TABLE `recommend_rule_act` (\n" +
+        String sql = "CREATE TABLE `flex_job_item` (\n" +
+                "  `JOB_ID` bigint(20) NOT NULL,\n" +
                 "  `ID` bigint(20) NOT NULL,\n" +
-                "  `RANGE_BEGIN` int(11) NOT NULL COMMENT '区间开始',\n" +
-                "  `RANGE_END` int(11) NOT NULL COMMENT '区间结束',\n" +
-                "  `CREATE_TIME` datetime NOT NULL,\n" +
-                "  `UPDATE_TIME` datetime NOT NULL,\n" +
-                "  PRIMARY KEY (`ID`)\n" +
-                ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;" +
-                "\n";
+                "  `QUANTITY` int(11) DEFAULT NULL COMMENT '需求数量',\n" +
+                "  `DATE_BEGIN` date DEFAULT NULL COMMENT '工作日期开始',\n" +
+                "  `DATE_END` date DEFAULT NULL COMMENT '工作日期结束',\n" +
+                "  `TIME_BEGIN` time DEFAULT NULL COMMENT '工作时间开始',\n" +
+                "  `TIME_END` time DEFAULT NULL COMMENT '工作时间结束',\n" +
+                "  `PROVINCE_CODE` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '工作省份编码',\n" +
+                "  `PROVINCE_NAME` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '工作省份名称',\n" +
+                "  `CITY_CODE` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '工作城市编码',\n" +
+                "  `CITY_NAME` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '工作城市名称',\n" +
+                "  `ADDRESS` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '工作详细地址',\n" +
+                "  `ORDER` int(11) DEFAULT NULL COMMENT '显示排序 升序排列',\n" +
+                "  PRIMARY KEY (`ID`),\n" +
+                "  KEY `JOB_ID` (`JOB_ID`)\n" +
+                ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='岗位工作地点,时间及招聘需求信息表';";
 
         printInfo(sql);
     }
 
 
-    private static void printInfo(String sql) {
+    public static void printInfo(String sql) {
         StringBuilder modelBuilder = new StringBuilder();
 
         StringBuilder insertBuilder = new StringBuilder();
