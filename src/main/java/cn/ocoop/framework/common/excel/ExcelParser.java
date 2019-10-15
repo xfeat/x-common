@@ -193,7 +193,7 @@ public class ExcelParser<T> {
 
             RowData rowData = new RowData();
             rowData.setIndex(rowNum);
-            log.info("行号：{}", row.getRowNum());
+            log.info("row num：{}", row.getRowNum());
 
             for (int cellIndex = cellNumStart; cellIndex < cellNumStart + cellMapper.size(); cellIndex++) {
                 Cell cell = row.getCell(cellIndex, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
@@ -201,11 +201,11 @@ public class ExcelParser<T> {
                 CellData cellData = new CellData(cellIndex, cell != null ? getValue(cell) : null);
 
                 CellValueMapper cellValueMapper = cellIndex_checker.get(cellIndex);
-                Assert.notNull(cellValueMapper, "未找到合适的处理mapper");
+                Assert.notNull(cellValueMapper, "no CellValueMapper found!");
                 try {
                     cellData.setTypedValue(cellValueMapper.map((String) cellData.getValue()));
                 } catch (InvalidValueException e) {
-                    log.error("参数校验失败", e);
+                    log.error("invalid value!", e);
                     cellData.setMessage(e.getMessage());
                 }
                 rowData.addCell(cellData);

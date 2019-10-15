@@ -63,7 +63,7 @@ public class TimeDeserializer extends JsonDeserializer<LocalTime> {
         }
 
         String pattern = getPattern(p.getText());
-        if (pattern == null) throw new RuntimeException("不支持的时间格式:" + p.getText());
+        if (pattern == null) throw new RuntimeException("unsupported time pattern:" + p.getText());
 
         return LocalTime.parse(p.getText(), DateTimeFormatter.ofPattern(pattern));
     }

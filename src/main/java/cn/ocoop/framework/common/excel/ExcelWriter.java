@@ -85,7 +85,7 @@ public class ExcelWriter {
         try {
             workbook.write(outputStream);
         } catch (Exception e) {
-            log.error("导出Excel异常", e);
+            log.error("export Excel error!", e);
         } finally {
             workbook.close();
         }

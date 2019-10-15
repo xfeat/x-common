@@ -35,7 +35,7 @@ public class AES {
 
             return Base64.getEncoder().encodeToString(result);//通过Base64转码返回
         } catch (Exception ex) {
-            log.error("加密失败", ex);
+            log.error("encrypt failed!", ex);
         }
 
         return null;
@@ -62,7 +62,7 @@ public class AES {
 
             return new String(result, "utf-8");
         } catch (Exception ex) {
-            log.error("解密失败", ex);
+            log.error("decrypt failed!", ex);
         }
 
         return null;
@@ -89,7 +89,7 @@ public class AES {
 
             return new SecretKeySpec(secretKey.getEncoded(), KEY_ALGORITHM);// 转换为AES专用密钥
         } catch (NoSuchAlgorithmException ex) {
-            log.error("secretKey创建失败", ex);
+            log.error("secretKey create failed!", ex);
         }
 
         return null;

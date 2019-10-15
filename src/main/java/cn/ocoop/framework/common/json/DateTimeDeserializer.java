@@ -106,7 +106,7 @@ public class DateTimeDeserializer extends JsonDeserializer<LocalDateTime> {
         }
 
         String pattern = getPattern(p.getText());
-        if (pattern == null) throw new RuntimeException("不支持的日期格式:" + p.getText());
+        if (pattern == null) throw new RuntimeException("unsupported date pattern:" + p.getText());
 
         return LocalDateTime.parse(p.getText(), DateTimeFormatter.ofPattern(pattern));
     }
