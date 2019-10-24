@@ -10,6 +10,9 @@ public class Result {
     private String message;
     private Object data;
 
+    public Result() {
+    }
+
     public Result(String code) {
         this.code = code;
     }

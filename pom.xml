@@ -6,7 +6,7 @@
 
     <groupId>cn.ocoop.framework</groupId>
     <artifactId>x-common</artifactId>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
 
     <name>x-common</name>
     <description>util case.</description>
